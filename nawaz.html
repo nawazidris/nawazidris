@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Nawaz Idris Khan — A Life in Chapters 💙</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #132238;
+            --gold: #c5a059;
+            --linen: #fcfaf7;
+            --white: #ffffff;
+            --slate: #546e7a;
+            --shadow: 0 12px 40px rgba(0,0,0,0.08);
+            --serif: 'Cormorant Garamond', serif;
+            --sans: 'Montserrat', sans-serif;
+            --script: 'Pinyon Script', cursive;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--sans);
+            background-color: var(--linen);
+            color: var(--navy);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ── BACKGROUND ── */
+        .starry-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(circle at top right, #ffffff 0%, #f4f7f9 100%);
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+
+        /* ── LOGIN ── */
+        #login-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .login-card {
+            background: var(--white);
+            padding: 60px 40px;
+            text-align: center;
+            width: min(420px, 90vw);
+            border-radius: 2px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+        }
+        .login-card h1 { font-family: var(--serif); font-size: 2.5rem; margin-bottom: 5px; }
+        .login-card p { font-family: var(--script); font-size: 2rem; color: var(--gold); margin-bottom: 30px; }
+        .login-card input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 1rem;
+            outline: none;
+        }
+        .login-card input:focus { border-color: var(--gold); }
+        .login-btn {
+            background: var(--navy);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        .login-btn:hover { background: var(--gold); }
+
+        /* ── NAVIGATION ── */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(15px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-brand { font-family: var(--serif); font-weight: 600; font-size: 1.4rem; color: var(--navy); }
+        .nav-controls { display: flex; align-items: center; gap: 15px; }
+        .btn-nav {
+            background: none;
+            border: 1px solid var(--gold);
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        .btn-nav:hover { background: var(--gold); color: white; }
+        .chapter-select {
+            padding: 8px 12px;
+            border: none;
+            background: var(--linen);
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            color: var(--navy);
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* ── ALBUM LAYOUT ── */
+        .container {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* COVER PAGE STYLE */
+        .page-cover {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--white);
+            min-height: 80vh;
+            box-shadow: var(--shadow);
+        }
+        .cover-content {
+            padding: 80px;
+            background: var(--navy);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .cover-content h1 { font-family: var(--serif); font-size: 4.5rem; line-height: 1; margin-bottom: 20px; }
+        .cover-content p { font-family: var(--script); font-size: 3rem; color: var(--gold); }
+        .cover-img { background-size: cover; background-position: center; }
+
+        /* SPREAD STYLE */
+        .page-spread {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 50px;
+        }
+        .story-sidebar {
+            background: var(--white);
+            padding: 50px;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+            box-shadow: var(--shadow);
+        }
+        .story-sidebar h2 { font-family: var(--serif); font-size: 2.2rem; margin-bottom: 20px; color: var(--navy); }
+        .chapter-label { 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            font-size: 0.7rem; 
+            color: var(--gold); 
+            margin-bottom: 10px; 
+            display: block; 
+            font-weight: 600;
+        }
+        .story-body { font-family: var(--serif); font-size: 1.2rem; font-style: italic; color: var(--slate); }
+
+        /* MASONRY GALLERY */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-auto-rows: 10px;
+            gap: 20px;
+        }
+        .media-card {
+            grid-row-end: span 30; /* Dynamic height later */
+            position: relative;
+            overflow: hidden;
+            background: #eee;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .media-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .media-card img, .media-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .media-card .overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(19, 34, 56, 0.8));
+            color: white;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .media-card:hover .overlay { opacity: 1; }
+        .video-badge {
+            position: absolute;
+            top: 15px; left: 15px;
+            background: var(--gold);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── LIGHTBOX ── */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(19, 34, 56, 0.98);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        #lightbox.active { display: flex; }
+        .lb-main { max-width: 90%; max-height: 80vh; position: relative; }
+        .lb-main img, .lb-main video { width: 100%; max-height: 80vh; object-fit: contain; }
+        .lb-caption { color: var(--gold); margin-top: 20px; font-family: var(--serif); font-size: 1.5rem; text-align: center; }
+        .lb-close { position: absolute; top: 30px; right: 40px; color: white; font-size: 2.5rem; cursor: pointer; }
+        .lb-btn { position: absolute; top: 50%; color: white; font-size: 3rem; cursor: pointer; padding: 20px; }
+        .lb-prev { left: 10px; }
+        .lb-next { right: 10px; }
+
+        /* ── FAB ── */
+        .fab {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 60px; height: 60px;
+            background: var(--navy);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 90;
+            transition: 0.3s;
+        }
+        .fab:hover { background: var(--gold); transform: scale(1.1); }
+
+        @media (max-width: 1000px) {
+            .page-cover { grid-template-columns: 1fr; }
+            .cover-content { padding: 40px; }
+            .cover-img { height: 350px; }
+            .page-spread { grid-template-columns: 1fr; }
+            .story-sidebar { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="starry-bg" id="starField"></div>
+
+<!-- AUTH -->
+<div id="login-screen">
+    <div class="login-card">
+        <h1>Nawaz Idris Khan</h1>
+        <p>A Life in Chapters</p>
+        <input type="password" id="passInput" placeholder="Password">
+        <button class="login-btn" onclick="checkAuth()">OPEN KEEPSAKE</button>
+        <p id="err" style="color:red; font-size:0.8rem; margin-top:10px;"></p>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div id="app" style="display:none;">
+    <header>
+        <div class="nav-brand">Nawaz Idris Khan 💙</div>
+        <div class="nav-controls">
+            <button class="btn-nav" onclick="prevPage()">Prev</button>
+            <select class="chapter-select" id="pageSelector" onchange="jumpToPage(this.value)"></select>
+            <button class="btn-nav" onclick="nextPage()">Next</button>
+        </div>
+    </header>
+
+    <div class="container" id="pageContent"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+    <span class="lb-close">&times;</span>
+    <div class="lb-btn lb-prev" onclick="event.stopPropagation(); navLightbox(-1)">&#10094;</div>
+    <div class="lb-btn lb-next" onclick="event.stopPropagation(); navLightbox(1)">&#10095;</div>
+    <div class="lb-main" onclick="event.stopPropagation()" id="lbMedia"></div>
+    <div class="lb-caption" id="lbCaption"></div>
+</div>
+
+<!-- FAB -->
+<div class="fab" onclick="alert('Upload system ready. In a live environment, this would connect to your server.')">+</div>
+
+<script>
+    // ─────────────────────────────────────────────────────────────────────────
+    // DATA RESTORATION (Exact match of your original content)
+    // ─────────────────────────────────────────────────────────────────────────
+    const ALBUM_PAGES = [
+      {
+        type: "cover",
+        title: "Nawaz Idris Khan",
+        subtitle: "Your First Year ✨💛",
+        image: "images/bornday1.webp",
+        extras: ["images/oct1.webp","images/nov1.webp"]
+      },
+      {
+        title: "Welcome to Earth — 6 October 2024 🎂",
+        label: "Newborn",
+        text: "Welcome to the world, little one! Your very first day was wrapped in love, wonder, and the sweetest kind of magic. Tiny hands, soft breaths, and a presence so precious — you are already so deeply loved.",
+        images: [
+          { src: "images/bornday2.webp", caption: "First picture" },
+          { src: "images/bornday1.webp", caption: "Cozy sleep time" },
+          { src: "images/bornday3.webp", caption: "Mama" },
+          { src: "images/bornday7.webp", caption: "Tiny fingers" },
+          { src: "images/bornday5.webp", caption: "First time with Grandma" },
+          { src: "images/bornday6.webp", caption: "Cozy sleep time" },
+          { src: "images/bornday4.webp", caption: "Meet Uncle Geo" },
+          { src: "images/bornday8.webp", caption: "Sleeping peacefully" }
+        ]
+      },
+      {
+        title: "First Month 💙",
+        label: "First days",
+        text: "The first month with our precious little boy, and our hearts are already so full. In just a few short weeks, you've brought endless love, gentle moments, and a kind of happiness we never knew was possible.",
+        images: [
+          { src: "images/oct2.webp", caption: "Mama Nawaz" },
+          { src: "images/oct3.webp", caption: "Dad" },
+          { src: "images/oct77.webp", caption: "Aunty Eunie" },
+          { src: "images/oct4.webp", caption: "Dad" },
+          { src: "images/oct6.webp", caption: "Tummy time giggles" },
+          { src: "images/oct7.webp", caption: "Sleeping peacefully" },
+          { src: "images/oct1.webp", caption: "Cozy cuddle time" },
+          { src: "images/oct5.webp", caption: "Sleeping peacefully" }
+        ]
+      },
+      {
+        title: "November 2024-Early Discoveries 💙",
+        label: "1 Month",
+        text: "Exploring new sounds and discovering the joy of your own little voice. Watching you grow, learn, and react to the world around you is such a beautiful journey. Every day with you is a gift.",
+        images: [
+          { src: "images/nov2.webp", caption: "Dressed up" },
+          { src: "images/nov3.webp", caption: "Happy moments" },
+          { src: "images/nov4.webp", caption: "Idris Khan" },
+          { src: "images/nov5.webp", caption: "Sleeping peacefully" },
+          { src: "images/nov6.webp", caption: "Playing" },
+          { src: "images/nov7.webp", caption: "Dad moments" },
+          { src: "images/nov8.webp", caption: "Mama moments" },
+          { src: "images/nov9.webp", caption: "Playing" },
+          { src: "images/nov10.webp", caption: "Sleeping peacefully" },
+          { src: "images/nov1.webp", caption: "Sleeping peacefully" }
+        ]
+      },
+      {
+        title: "December 2024 💙",
+        label: "First Christmas Season",
+        text: "A month full of warmth, cuddles, and growing curiosity. Your little personality is shining brighter every day, and your smiles are becoming even more magical.",
+        images: [
+          { src: "images/dec22.webp", caption: "With Gogo" },
+          { src: "images/dec6.webp", caption: "With Dad" },
+          { src: "images/dec23.webp", caption: "Aunty Vee" },
+          { src: "images/dec24.webp", caption: "Family" },
+          { src: "images/dec3.webp", caption: "Sleep time" },
+          { src: "images/dec5.webp", caption: "Playing" },
+          { src: "images/dec7.webp", caption: "Happy moments" },
+          { src: "images/dec8.webp", caption: "Smile time" },
+          { src: "images/dec9.webp", caption: "Playing" },
+          { src: "images/dec11.webp", caption: "Happy moments" },
+          { src: "images/dec12.webp", caption: "Milk First" },
+          { src: "images/dec2.webp", caption: "Playing" }
+        ]
+      },
+      {
+        title: "January 2025 💙",
+        label: "A New Year",
+        text: "January is the start of a new chapter — you are learning, growing, and filling our home with laughter and love. We are amazed by every little milestone.",
+        images: [
+          { src: "images/jan1.webp", caption: "Playing with Mama" },
+          { src: "images/jan2.webp", caption: "Dad" },
+          { src: "images/jan3.webp", caption: "Happy moments" },
+          { src: "images/jan4.webp", caption: "Smile time" },
+          { src: "images/jan6.webp", caption: "Dad" },
+          { src: "images/jan7.webp", caption: "Smile time" }
+        ]
+      },
+      {
+        title: "February 2025 💙",
+        label: "4 Months",
+        text: "February is here, and with it comes a world of new experiences. You are learning to reach, to explore, and to interact with your surroundings in ways that leave us in awe.",
+        images: [
+          { src: "images/feb10.webp", caption: "Playing with Mama" },
+          { src: "images/feb25.webp", caption: "Playing with Mama" },
+          { src: "images/feb2.webp", caption: "Dad moments" },
+          { src: "images/feb11.webp", caption: "Plenty milk" },
+          { src: "images/feb4.webp", caption: "Happy moments" },
+          { src: "images/feb1.webp", caption: "Playing with Dad" },
+          { src: "images/feb3.webp", caption: "Smile time" }
+        ]
+      },
+      {
+        title: "March 2025 💙",
+        label: "First Steps of Faith",
+        text: "This month you experienced your first Ashes Day in the Roman Catholic faith — a beautiful and sacred moment where you were blessed and welcomed deeper into a life of faith.",
+        images: [
+          { src: "images/mar1.webp", caption: "First Ashes Day ✝️" },
+          { src: "images/mar3.webp", caption: "First Ashes Day ✝️" },
+          { src: "images/mar4.webp", caption: "First Ashes Day ✝️" },
+          { src: "images/mar25 (1).webp", caption: "Mama's boy" },
+          { src: "images/mar25 (2).webp", caption: "Nawa" },
+          { src: "images/mar25 (3).webp", caption: "First Ashes Day ✝️" },
+          { src: "images/mar25 (4).webp", caption: "Pride & Joy" },
+          { src: "images/mar25 (5).webp", caption: "Sekuru Jeff" },
+          { src: "images/mar25 (6).webp", caption: "Sekuru Jeff " },
+          { src: "images/mar25 (7).webp", caption: "Bhabhu" },
+          { src: "images/mar10.webp", caption: "Dad" }
+        ]
+      },
+      {
+        title: "April 2025 💙",
+        label: "Halfway There",
+        text: "April brings a season of new life, flowers blooming — and your presence makes everything even more magical. Your laughter is the sweetest melody.",
+        images: [
+          { src: "images/apr1.webp", caption: "Playing with dad" },
+          { src: "images/apr2.webp", caption: "Watching cartoons" },
+          { src: "images/apr3.webp", caption: "Selfie time" },
+          { src: "images/april25.webp", caption: "Mama's moments" },
+          { src: "images/apr4.webp", caption: "Playing with dad" }
+        ]
+      },
+      {
+        title: "May 2025 💙",
+        label: "7 Months",
+        text: "May is here, and with it comes longer days filled with warmth, playfulness, and endless wonder. We are so proud of how much you are growing.",
+        images: [
+          { src: "images/may3.webp", caption: "Playing with dad" },
+          { src: "images/may4.webp", caption: "Mama" },
+          { src: "images/may5.webp", caption: "Mama" },
+          { src: "images/may6.webp", caption: "Sis Yolanda" },
+          { src: "images/may7.webp", caption: "Mama" },
+          { src: "images/may1.webp", caption: "Comoleon time" },
+          { src: "images/may9.webp", caption: "Dad" },
+          { src: "images/may8.webp", caption: "Sunset photos" },
+          { src: "images/may10.webp", caption: "Sleep time" },
+          { src: "images/may2.webp", caption: "Big boy" },
+          { src: "images/may25.webp", caption: "Happy" },
+          { src: "images/may11.webp", caption: "Happy moments" }
+        ]
+      },
+      {
+        title: "June 2025 💙",
+        label: "8 Months",
+        text: "June brings the magic of cold and bright sunny days, just like the light you bring into our lives. Watching you grow is an endless joy.",
+        images: [
+          { src: "images/jun1.webp", caption: "Bhonzo Fav Nyama" },
+          { src: "images/jun2.webp", caption: "Amila mila" },
+          { src: "images/jun3.webp", caption: "Happy moments" },
+          { src: "images/jun4.webp", caption: "Smile time" },
+          { src: "images/jun10.webp", caption: "Playing with Mama" },
+          { src: "images/jun5.webp", caption: "Dad" },
+          { src: "images/jun11.webp", caption: "Happy moments" }
+        ]
+      },
+      {
+        title: "July 2025 💙",
+        label: "9 Months",
+        text: "July is here with warm sunshine, playful days, and joyful moments. Each day, you surprise us with your growing personality.",
+        images: [
+          { src: "images/jul1.webp", caption: "Akuda kuchema" },
+          { src: "images/jul4.webp", caption: "Dad" },
+          { src: "images/jul5.webp", caption: "Happy moments" },
+          { src: "images/jul6.webp", caption: "Sleep time" },
+          { src: "images/jul8.webp", caption: "Smile time" },
+          { src: "images/july25.webp", caption: "Big boy" },
+          { src: "images/jul9.webp", caption: "Cartoon time" }
+        ]
+      },
+      {
+        title: "August 2025 💙",
+        label: "10 Months",
+        text: "August is a month of gentle summer evenings and sweet discoveries. You are growing into a bright, curious, and joyful little boy.",
+        images: [
+          { src: "images/aug3.webp", caption: "Playing with toys" },
+          { src: "images/aug2.webp", caption: "Cute" },
+          { src: "images/aug7.webp", caption: "Khan visit" },
+          { src: "images/aug4.webp", caption: "Khan visit" },
+          { src: "images/aug1.webp", caption: "Smile time" },
+          { src: "images/aug6.webp", caption: "Smile time" },
+          { src: "images/aug9.webp", caption: "Good moments" },
+          { src: "images/aug8.webp", caption: "Smile time" },
+          { src: "images/aug25 (1).webp", caption: "Big boy" },
+          { src: "images/aug25 (2).webp", caption: "Yolo" },
+          { src: "images/aug25 (3).webp", caption: "Yolo" },
+          { src: "images/aug25 (4).webp", caption: "Big boy" },
+          { src: "images/aug25 (5).webp", caption: "Big boy" },
+          { src: "images/aug5.webp", caption: "Smile time" }
+        ]
+      },
+      {
+        title: "September 2025 💙",
+        label: "11 Months",
+        text: "September brings the first hints of autumn. We marvel at how much you have grown since your first days.",
+        images: [
+          { src: "images/sep1.webp", caption: "TV time" },
+          { src: "images/sep3.webp", caption: "Khan Family visit" },
+          { src: "images/sep12.webp", caption: "Happy moments" },
+          { src: "images/sep4.webp", caption: "Smile time" },
+          { src: "images/sep11.webp", caption: "Smile time" },
+          { src: "images/oct25.webp", caption: "Cartoon time" },
+          { src: "images/sep10.webp", caption: "Smile time" }
+        ]
+      },
+      {
+        title: "1st Birthday 🎉",
+        label: "1 Year!",
+        text: "Happy 1st Birthday, little boy! One whole year of love, laughter, and unforgettable moments since you came into our lives.",
+        images: [
+          { src: "images/nawa1.webp", caption: "Cake day 🎉" },
+          { src: "images/nawa2.webp", caption: "Cake day 🎉" },
+          { src: "images/nawa4.webp", caption: "Cake day 🎉" },
+          { src: "images/nawa6.webp", caption: "Cake day 🎉" },
+          { src: "images/nawa7.webp", caption: "Cake day 🎉" },
+          { src: "images/nawa8.webp", caption: "Cake day 🎉" },
+          { src: "images/nawa12.webp", caption: "Cake day 🎉" },
+          { src: "images/nawa10.webp", caption: "Cake day 🎉" }
+        ]
+      },
+      {
+        title: "Videos — Part 1 🎥",
+        label: "Videos Pt.1",
+        text: "A collection of our favourite videos from your first year, capturing the most precious moments.",
+        videos: [
+          { src: "videos/vid1.mp4", caption: "First porridge" },
+          { src: "videos/vid2.mp4", caption: "First bath" },
+          { src: "videos/vid3.mp4", caption: "Sleepy time" },
+          { src: "videos/vid5.mp4", caption: "Play time" },
+          { src: "videos/vid6.mp4", caption: "Play time" },
+          { src: "videos/vid7.mp4", caption: "Gutu visit" },
+          { src: "videos/vid8.mp4", caption: "Play time" }
+        ]
+      },
+      {
+        title: "Videos — Part 2 🎥",
+        label: "Videos Pt.2",
+        text: "More treasured moments from your first year — every giggle, every milestone.",
+        videos: [
+          { src: "videos/vid9.mp4", caption: "All smiles" },
+          { src: "videos/vid10.mp4", caption: "Some Miscellaneous" },
+          { src: "videos/vid11.mp4", caption: "Roaring like a lion" },
+          { src: "videos/vid12.mp4", caption: "Roaring like a lion" },
+          { src: "videos/vid14.mp4", caption: "Birthday celebration dances" },
+          { src: "videos/vid15.mp4", caption: "Birthday celebration dances" },
+          { src: "videos/vid13.mp4", caption: "Play time" }
+        ]
+      },
+      {
+        title: "November 2025 💙",
+        label: "13 Months",
+        text: "November brings cozy autumn days and cherished moments. This month, we watch you explore and giggle.",
+        images: [
+          { src: "images/nov11.webp", caption: "Playing with Dad" },
+          { src: "images/idris (1).webp", caption: "Ice cream" },
+          { src: "images/nov12.webp", caption: "Happy moments" }
+        ]
+      },
+      {
+        title: "December 2025 💙",
+        label: "14 Months",
+        text: "Visited Nyika-Bikita, our rural home for the very first time. Surrounded by nature and your roots.",
+        images: [
+          { src: "images/dece1.webp", caption: "Bikita" },
+          { src: "images/dece2.webp", caption: "Bikita" },
+          { src: "images/dece3.webp", caption: "Bikita" },
+          { src: "images/dece4.webp", caption: "Playing with toys" },
+          { src: "images/dece5.webp", caption: "04-roots" },
+          { src: "images/dece6.webp", caption: "Gutu" },
+          { src: "images/dece7.webp", caption: "Mango eating" },
+          { src: "images/idris (4).webp", caption: "Spring joy" },
+          { src: "images/idris (5).webp", caption: "Spring joy" },
+          { src: "images/idris (6).webp", caption: "Spring joy" },
+          { src: "images/idris (7).webp", caption: "Spring joy" },
+          { src: "images/idris (3).webp", caption: "Spring joy" },
+          { src: "images/idris (8).webp", caption: "Spring joy" },
+          { src: "images/idris (10).webp", caption: "Mama" },
+          { src: "images/dece8.webp", caption: "04-roots" }
+        ]
+      },
+      {
+        type: "yearCover",
+        title: "2026 Highlights",
+        subtitle: "The Year 2026 in Pictures ✨💛",
+        image: "idris/idris (7).webp",
+        images: [
+          { src: "idris/idris (2).webp", caption: "Sweet moments" },
+          { src: "idris/idris (4).webp", caption: "Family love" },
+          { src: "idris/idris (16).webp", caption: "New beginnings" },
+          { src: "idris/idris (28).webp", caption: "Spring joy" },
+          { src: "idris/idris (30).webp", caption: "Summer days" }
+        ]
+      },
+      {
+        title: "Jan — March 2026 💙",
+        label: "First Quarter 2026",
+        text: "As you enter your second year, your personality shines brighter every day.",
+        images: [
+          { src: "idris/idris (1).webp", caption: "Sweet moments" },
+          { src: "idris/idris (2).webp", caption: "Family love" },
+          { src: "idris/idris (3).webp", caption: "New beginnings" },
+          { src: "idris/idris (4).webp", caption: "Spring joy" },
+          { src: "idris/idris (5).webp", caption: "Sweet moments" },
+          { src: "idris/idris (6).webp", caption: "Family love" },
+          { src: "idris/idris (7).webp", caption: "New beginnings" },
+          { src: "idris/idris (8).webp", caption: "Spring joy" },
+          { src: "idris/idris (9).webp", caption: "Sweet moments" },
+          { src: "idris/idris (10).webp", caption: "Family love" },
+          { src: "idris/idris (11).webp", caption: "New beginnings" },
+          { src: "idris/idris (12).webp", caption: "Spring joy" },
+          { src: "idris/idris (14).webp", caption: "Spring joy" },
+          { src: "idris/idris (13).webp", caption: "Summer days" },
+          { src: "idris/idris (15).webp", caption: "Spring joy" },
+          { src: "idris/idris (16).webp", caption: "Spring joy" },
+          { src: "idris/idris (22).webp", caption: "Spring joy" },
+          { src: "idris/idris (23).webp", caption: "Spring joy" },
+          { src: "idris/idris (24).webp", caption: "Spring joy" },
+          { src: "idris/idris (25).webp", caption: "Spring joy" },
+          { src: "idris/idris (26).webp", caption: "Spring joy" },
+          { src: "idris/idris (27).webp", caption: "Spring joy" },
+          { src: "idris/idris (28).webp", caption: "Spring joy" }
+        ]
+      },
+      {
+        title: "2026 Videos — 1 🎥",
+        label: "2026 Videos Pt.1",
+        text: "Capturing the most precious moments and milestones of 2026.",
+        videos: [
+          { src: "videos/dance.mp4", caption: "Dance" },
+          { src: "videos/idris1.mp4", caption: "Fav Windows" },
+          { src: "videos/idris2.mp4", caption: "Ummm" },
+          { src: "videos/idris6.mp4", caption: "Ichooo" },
+          { src: "videos/mama.mp4", caption: "Mama" },
+          { src: "videos/Nawa & yolo.mp4", caption: "Yolo" },
+          { src: "videos/idris5.mp4", caption: "Tshaya" }
+        ]
+      },
+      {
+        title: "2026 Videos — 2 🎥",
+        label: "2026 Videos Pt.2",
+        text: "More wonderful video memories from 2026.",
+        videos: [
+          { src: "videos/nawa1.mp4", caption: "Washen" },
+          { src: "videos/nawa2.mp4", caption: "Karun" },
+          { src: "videos/nawa3.mp4", caption: "Speedy Nawa" },
+          { src: "videos/nawa4.mp4", caption: "Zvichaita chete" },
+          { src: "videos/nawa5.mp4", caption: "Bhoya" },
+          { src: "videos/nawa6.mp4", caption: "Zvichaita chete" },
+          { src: "videos/tate.mp4", caption: "Tate Nhanha" }
+        ]
+      },
+      {
+        title: "Apr — June 2026 💙",
+        label: "Second Quarter 2026",
+        text: "Spring blooms and summer approaches, bringing new discoveries.",
+        images: [
+          
+          { src: "images/idris (2).webp", caption: "Ice cream" },
+          { src: "images/idris (9).webp", caption: "Spring joy" },
+          
+          { src: "images/idris (11).webp", caption: "Spring joy" },
+          { src: "images/apr26.jpg", caption: "Hey" },
+          { src: "images/jun26 (1).jpg", caption: "Hospital" },
+          { src: "images/jun26 (2).jpg", caption: "Hospital" },
+          { src: "images/jun26 (3).jpg", caption: "Hospital" },
+          { src: "images/jun26 (4).jpg", caption: "Hospital" },
+          { src: "images/jun26 (5).jpg", caption: "Hospital" },
+          { src: "images/jun26 (6).jpg", caption: "Hospital" },
+          { src: "images/jun26 (7).jpg", caption: "Hospital" },
+          { src: "images/jun26 (8).jpg", caption: "Hospital" },
+          { src: "images/jun26 (9).jpg", caption: "Hospital" },
+          { src: "images/jun26 (10).jpg", caption: "Hospital" },
+          { src: "images/may26.jpg", caption: "Big Boy" },
+          { src: "images/may261.jpg", caption: "Food Lover" },
+          { src: "images/may262.jpg", caption: "Adonha" },
+          { src: "images/may263.jpg", caption: "Swimming" },
+          { src: "images/may264.jpg", caption: "Swimming" },
+          { src: "images/may265.jpg", caption: "Bhoya" },
+          { src: "images/may266.jpg", caption: "Big Boy" },
+          { src: "images/may267.jpg", caption: "Bhabhu" },
+          { src: "images/may268.jpg", caption: "Soccer Player" },
+          { src: "images/may269.jpg", caption: "Soccer Player" },
+          { src: "images/may2610.jpg", caption: "Happy" }
+         
+        ]
+      },
+      {
+        title: "2026 Videos — 3 🎥",
+        label: "2026 Videos Pt.3",
+        text: "Your growing personality captured in every clip.",
+        videos: [
+          { src: "videos/june (1).mp4", caption: "Bhoya" },
+          { src: "videos/june (2).mp4", caption: "Best Friend" },
+          { src: "videos/june (3).mp4", caption: "Best Friend" },
+          { src: "videos/june (4).mp4", caption: "Bhoya" },
+          { src: "videos/june (5).mp4", caption: "Piano" },
+          { src: "videos/june (6).mp4", caption: "Piano" },
+          { src: "videos/june (7).mp4", caption: "Piano" },
+          { src: "videos/june (8).mp4", caption: "Piano" },
+          { src: "videos/june (9).mp4", caption: "Piano" },
+          { src: "videos/june (10).mp4", caption: "Bhoya" },
+          { src: "videos/june (11).mp4", caption: "Bhoya" },
+          { src: "videos/june (12).mp4", caption: "Bhoya" }
+        ]
+      },
+      {
+        title: "Jul — Sep 2026 💙",
+        label: "Third Quarter 2026",
+        text: "Summer days filled with play, exploration, and family time.",
+        images: [
+         
+        ]
+      },
+      {
+        title: "Oct — Dec 2026 💙",
+        label: "Fourth Quarter 2026",
+        text: "Autumn leaves and winter wonderlands, filled with cozy moments.",
+        images: [
+         
+        ]
+      }
+    ];
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // APP LOGIC
+    // ─────────────────────────────────────────────────────────────────────────
+    let currentIndex = 0;
+    let currentGallery = [];
+    let lbIndex = 0;
+
+    function checkAuth() {
+        if(document.getElementById('passInput').value.toLowerCase() === 'nawaz') {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+            init();
+        } else {
+            document.getElementById('err').innerText = 'Invalid Code';
+        }
+    }
+
+    function init() {
+        createStars();
+        populateNav();
+        renderPage();
+    }
+
+    function createStars() {
+        const field = document.getElementById('starField');
+        for(let i=0; i<40; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 'px';
+            star.style.width = size; star.style.height = size;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            field.appendChild(star);
+        }
+    }
+
+    function populateNav() {
+        const sel = document.getElementById('pageSelector');
+        ALBUM_PAGES.forEach((p, i) => {
+            sel.options[sel.options.length] = new Option(p.label || p.title, i);
+        });
+    }
+
+    function renderPage() {
+        const data = ALBUM_PAGES[currentIndex];
+        const container = document.getElementById('pageContent');
+        window.scrollTo(0,0);
+        
+        if(data.type === 'cover' || data.type === 'yearCover') {
+            container.innerHTML = `
+                <div class="page-cover">
+                    <div class="cover-content">
+                        <span class="chapter-label">Chapter Collection</span>
+                        <h1>${data.title}</h1>
+                        <p>${data.subtitle || ''}</p>
+                    </div>
+                    <div class="cover-img" style="background-image: url('${data.image}')"></div>
+                </div>
+            `;
+            currentGallery = data.images || [];
+        } else {
+            const allImages = data.images || [];
+            const allVideos = data.videos || [];
+            currentGallery = [...allImages, ...allVideos];
+
+            container.innerHTML = `
+                <div class="page-spread">
+                    <div class="story-sidebar">
+                        <span class="chapter-label">${data.label}</span>
+                        <h2>${data.title}</h2>
+                        <div class="story-body">${data.text}</div>
+                    </div>
+                    <div class="gallery-container">
+                        ${allVideos.map((v, i) => `
+                            <div class="media-card" onclick="openLightbox(${allImages.length + i})">
+                                <span class="video-badge">Video</span>
+                                <video src="${v.src}#t=0.1"></video>
+                                <div class="overlay">${v.caption}</div>
+                            </div>
+                        `).join('')}
+                        ${allImages.map((img, i) => `
+                            <div class="media-card" onclick="openLightbox(${i})">
+                                <img src="${img.src}" loading="lazy">
+                                <div class="overlay">${img.caption}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        document.getElementById('pageSelector').value = currentIndex;
+    }
+
+    function jumpToPage(val) { currentIndex = parseInt(val); renderPage(); }
+    function nextPage() { if(currentIndex < ALBUM_PAGES.length - 1) { currentIndex++; renderPage(); } }
+    function prevPage() { if(currentIndex > 0) { currentIndex--; renderPage(); } }
+
+    function openLightbox(idx) {
+        lbIndex = idx;
+        const item = currentGallery[lbIndex];
+        const mediaCont = document.getElementById('lbMedia');
+        
+        if(item.src.includes('.mp4')) {
+            mediaCont.innerHTML = `<video src="${item.src}" controls autoplay></video>`;
+        } else {
+            mediaCont.innerHTML = `<img src="${item.src}">`;
+        }
+        document.getElementById('lbCaption').innerText = item.caption;
+        document.getElementById('lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.getElementById('lbMedia').innerHTML = '';
+    }
+
+    function navLightbox(dir) {
+        lbIndex += dir;
+        if(lbIndex < 0) lbIndex = currentGallery.length - 1;
+        if(lbIndex >= currentGallery.length) lbIndex = 0;
+        openLightbox(lbIndex);
+    }
+
+    // Key nav
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') document.getElementById('lightbox').classList.contains('active') ? navLightbox(1) : nextPage();
+        if(e.key === 'ArrowLeft') document.getElementById('lightbox').classList.contains('active') ? navLightbox(-1) : prevPage();
+        if(e.key === 'Escape') closeLightbox();
+    });
+</script>
+
+</body>
+</html>
